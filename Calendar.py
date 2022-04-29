@@ -24,20 +24,23 @@ class JCalendar(tk.Frame):
     def __init__(self, parent, width, height, root):
         tk.Frame.__init__(self, parent)
 
-        cal = Calendar(parent, selectmode='day', year=2022, month=4, day=20)
-        cal.pack(fill="both", expand=True)
+        self.cal = Calendar(parent, selectmode='day', year=2022, month=4, day=20)
+        self.cal.pack(fill="both", expand=True)
+
+        self.top = tk.Toplevel(root)
+        self.top.pack_propagate(0)
+        self.top.withdraw()
+
+    def event(self):
+        self.top.deiconify()
+        tk.Label(self.top, text="Event adder").pack()
 
         def select_date():
-            date.config(text="Selected Date Is: " + cal.get_date())
+            date.config(text="Selected Date Is: " + self.cal.get_date())
 
-        tk.Button(parent, text="Get Date", command=select_date).pack()
-        date = tk.Label(parent, text="")
+        tk.Button(self.top, text="Get Date", command=select_date).pack()
+        date = tk.Label(self.top, text="")
         date.pack(pady=20)
-
-        top = tk.Toplevel(root)
-        top.pack_propagate(0)
-
-        tk.Label(top, text="Event adder").pack()
 
 
 if __name__ == "__main__":
