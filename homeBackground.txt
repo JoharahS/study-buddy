@@ -1,0 +1,3 @@
+gif
+./backgrounds/bubbles.gif
+24
