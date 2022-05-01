@@ -1,6 +1,7 @@
 import time
 import tkinter as tk
 from tkinter import *
+from notifypy import Notify
 
 
 class Test(tk.Tk):
@@ -78,6 +79,10 @@ class Timer(tk.Frame):
                     minutes.set('00')
                     hours.set('00')
                 self.times -= 1
+            notification = Notify()
+            notification.title = "Timer"
+            notification.message = "Times up!"
+            notification.send()
 
         def pomodoro():
             seconds.set('00')
