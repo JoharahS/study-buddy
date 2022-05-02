@@ -4,3 +4,4 @@ A simple application for studying.
 - numpy
 - pillow
 - tkcalendar
+- notifypy

@@ -55,7 +55,7 @@ class ButtonMenu(tk.Frame):
         frame = tk.Frame(self, bg="white", width=min_w, height=screen_height)
         frame.pack(side="left", fill="y")
 
-        path = './menu_icons/'
+        path = os.path.dirname(os.path.realpath(__file__)) + '/menu_icons/'
         b1img = PhotoImage(file=os.path.join(path, b1)).subsample(2)
         b2img = PhotoImage(file=os.path.join(path, b2)).subsample(2)
         b3img = PhotoImage(file=os.path.join(path, b3)).subsample(2)

@@ -14,6 +14,9 @@ from Settings import Settings
 from Timer import Timer
 from Whiteboard import Whiteboard
 
+import os
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
 """
 WINDOW CONTAINER --> Main Window
 
@@ -32,7 +35,7 @@ class GUIProject(tk.Tk):
         tk.Tk.__init__(self, *args, **kwargs)
 
         self.resizable(False, False)
-        self.title("GUI Project")
+        self.title("Study Buddy")
         self.overrideredirect(True)
         self.overrideredirect(False)
         self.grid_propagate(0)
@@ -84,7 +87,7 @@ class GUIProject(tk.Tk):
         # BIND ESCAPE BUTTON TO MAKE APPLICATION WINDOWED
         def window(event):
             self.update_screensize("800x520")
-            screensize_file = open("screensize.txt", "w+")
+            screensize_file = open(dir_path + "/screensize.txt", "w+")
             screensize_file.truncate(0)
             screensize_file.write("800x520")
             screensize_file.close()
@@ -108,7 +111,7 @@ class GUIProject(tk.Tk):
     def update_home_background(self, container, extension, frameCount, path):
         self.frames[Home_Screen].destroy()
         # Create a new Home Screen with selected background
-        screensize_file = open("screensize.txt", "r")
+        screensize_file = open(dir_path + "/screensize.txt", "r")
         screensize = screensize_file.readline()
         screensize_file.close()
         x = screensize.index('x')
@@ -275,8 +278,9 @@ class Home_Screen(tk.Frame):
                 clock.after(1000, time)
 
             background = tk.Label(self.rightFrame, bg='black')
-            img = Image.open(self.path)
-            rimg = img.resize((screen_width, screen_height), Image.ANTIALIAS)
+            self_path = str(self.path)
+            img = Image.open(str(dir_path) + self_path[self_path.index("/"):])
+            rimg = img.resize((screen_width, screen_height), Image.Resampling.LANCZOS)
             bgImg = ImageTk.PhotoImage(rimg)
             background.image = bgImg
             background.configure(image=bgImg)
@@ -474,7 +478,7 @@ class Timer_Screen(tk.Frame):
 
 
 if __name__ == "__main__":
-    homeBackground_file = open("homeBackground.txt", "r")
+    homeBackground_file = open(dir_path + "/homeBackground.txt", "r")
     extension = homeBackground_file.readline()
     extension = extension.strip()
     path = homeBackground_file.readline()
@@ -482,7 +486,7 @@ if __name__ == "__main__":
     frameCount = int(homeBackground_file.readline())
     homeBackground_file.close()
 
-    screensize_file = open("screensize.txt", "r")
+    screensize_file = open(dir_path + "/screensize.txt", "r")
     ss = screensize_file.readline()
     screensize_file.close()
 
