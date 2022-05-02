@@ -1,4 +1,4 @@
-import time
+import time, os
 import tkinter as tk
 from tkinter import *
 from notifypy import Notify
@@ -79,10 +79,15 @@ class Timer(tk.Frame):
                     minutes.set('00')
                     hours.set('00')
                 self.times -= 1
-            notification = Notify()
-            notification.title = "Timer"
-            notification.message = "Times up!"
-            notification.send()
+
+            # If timer actually ran out of time, not just paused by self.times < 0 -> send times up notifcation
+            if int(hours.get()) == 0 and int(minutes.get()) == 0 and int(seconds.get()) == 0:
+                notification = Notify()
+                notification.title = "Timer"
+                notification.message = "Times up!"
+                path = os.path.dirname(os.path.realpath(__file__)) + '/menu_icons/'
+                notification.icon = os.path.join(path, 'alarm.png')
+                notification.send()
 
         def pomodoro():
             seconds.set('00')
