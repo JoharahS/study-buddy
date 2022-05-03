@@ -31,28 +31,40 @@ class Whiteboard(tk.Frame):
 
         # MENU BAR (BOTTOM)
         bar = tk.Frame(self.root)
-        bar.pack(side="bottom", padx=(self.width / 20, self.width / 8))
+        bar.pack(side="bottom", padx=(self.width / 20, self.width / 8), pady=15)
 
-        self.pen_button = tk.Button(bar, text='pen', command=self.use_pen)
+        # COLORING
+        bg_color = "#b6b4ae"
+        btn_color = "#c7c5c1"
+        parent.configure(bg=bg_color)
+        self.root.configure(bg=bg_color)
+        bar.configure(bg=btn_color)
+
+        font_size = int(self.width / 60)
+        b_font = f"Verdana {font_size}"
+
+        self.pen_button = tk.Button(bar, text='pen', command=self.use_pen, font=b_font, bg=btn_color, relief='ridge',
+                                    highlightcolor='white')
         self.pen_button.grid(row=0, column=0, padx=15)
 
-        self.brush_button = tk.Button(bar, text='brush', command=self.use_brush)
+        self.brush_button = tk.Button(bar, text='brush', command=self.use_brush, font=b_font, bg=btn_color, relief='flat')
         self.brush_button.grid(row=0, column=1, padx=15)
 
-        self.color_button = tk.Button(bar, text='color', command=self.choose_color)
+        self.color_button = tk.Button(bar, text='color', command=self.choose_color, font=b_font, bg=btn_color, relief='flat')
         self.color_button.grid(row=0, column=2, padx=15)
 
-        self.eraser_button = tk.Button(bar, text='eraser', command=self.use_eraser)
+        self.eraser_button = tk.Button(bar, text='eraser', command=self.use_eraser, font=b_font, bg=btn_color, relief='flat')
         self.eraser_button.grid(row=0, column=3, padx=15)
 
-        self.clear_button = tk.Button(bar, text='clear', command=self.clear)
+        self.clear_button = tk.Button(bar, text='clear', command=self.clear, font=b_font, bg=btn_color, relief='flat')
         self.clear_button.grid(row=0, column=4, padx=15)
 
-        self.choose_size_button = tk.Scale(bar, from_=1, to=100, orient=HORIZONTAL)
+        self.choose_size_button = tk.Scale(bar, from_=1, to=100, orient=HORIZONTAL, font=b_font, bg=btn_color, relief='flat',
+                                           troughcolor='white')
         self.choose_size_button.grid(row=0, column=5, padx=15)
 
         # WHITEBOARD
-        self.c = Canvas(self.root, bg='white', width=(3 * self.width / 4), height=(3 * self.height / 4))
+        self.c = Canvas(self.root, bg='white', width=(3 * self.width / 4), height=(3 * self.height / 4), relief='ridge')
         self.c.pack(side="top", padx=(self.width / 20, self.width / 8))
 
         # MOUSE SETUP aka B1
@@ -86,8 +98,8 @@ class Whiteboard(tk.Frame):
         self.c.delete('all')
 
     def activate_button(self, some_button, eraser_mode=False):
-        self.active_button.config(relief=RAISED)
-        some_button.config(relief=SUNKEN)
+        self.active_button.config(relief='flat')
+        some_button.config(relief='ridge')
         self.active_button = some_button
         self.eraser_on = eraser_mode
 
